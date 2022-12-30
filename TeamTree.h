@@ -26,7 +26,6 @@ private:
     static TeamNode<KEY>* removeRec(TeamNode<KEY>* node,Team* team);
     static bool isAVLTree(TeamNode<KEY>* node);
 
-
 public:
     TeamNode<KEY>* tree;
 

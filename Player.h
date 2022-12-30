@@ -6,8 +6,19 @@
 #define WET2_PLAYER_H
 
 
-class Player {
+class Player
+{
+private:
+    int id;
+    int cards;
 
+public:
+    Player(int id, int cards): id(id), cards(cards) {}
+    ~Player() = default;
+    Player(const Player& other) = delete;
+    Player& operator=(const Player& other) = delete;
+    int getId() const;
+    int getCards() const;
 };
 
 

@@ -7,7 +7,9 @@
 
 #include "TeamStats.h"
 #include "wet2util.h"
-#include "PlayerNode.h"
+#include "Player.h"
+
+class PlayerNode;
 
 class Team
 {
@@ -16,15 +18,38 @@ private:
     permutation_t teamSpirit;
     int points;
     PlayerNode* playersTreeRoot;
-    bool hasGoalKeeper;
+    bool valid;
     int numPlayers;
 
 public:
-    Team(): key() {}
+    Team(): key(nullptr), teamSpirit(permutation_t::neutral()), points(0), playersTreeRoot(nullptr), valid(false), numPlayers(0) {}
+    Team(int id, int points): teamSpirit(permutation_t::neutral()), points(points),
+                playersTreeRoot(nullptr), valid(false), numPlayers(0)
+    {
+        this->key = new TeamStats(id);
+    }
     ~Team();
+    Team(const Team& other) = delete;
+    Team& operator=(const Team& other) = delete;
     TeamStats* getKey() const;
-
+    int getId() const;
+    int getAbility() const;
+    void increaseAbility(int amount);
+    permutation_t getTeamSpirit() const;
+    void composeTeamSpirit(const permutation_t& spirit);
+    int getPoints() const;
+    void addPoints(int amount);
+    PlayerNode* getPlayersTreeRoot() const;
+    void setPlayersTreeRoot(PlayerNode* node);
+    bool isValid() const;
+    void setValid(bool newValid);
+    int getNumPlayers() const;
+    void increaseNumPlayers(int amount);
+    PlayerNode* addPlayer(Player* player);
+    bool operator<(const Team& other) const;
+    bool operator>(const Team& other) const;
+    void buy(Team* other);
+    bool isDummy() const;
 };
-
 
 #endif //WET2_TEAM_H

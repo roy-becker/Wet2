@@ -3,3 +3,13 @@
 //
 
 #include "Player.h"
+
+int Player::getId() const
+{
+    return this->id;
+}
+
+int Player::getCards() const
+{
+    return this->cards;
+}
