@@ -16,12 +16,27 @@
 #define WORLDCUP23A2_H_
 
 #include "wet2util.h"
+#include "Chain.h"
+#include "OurMath.h"
+#include "Player.h"
+#include "PlayerNode.h"
+#include "PlayerTable.h"
+#include "Team.h"
+#include "TeamId.h"
+#include "TeamNode.h"
+#include "TeamStats.h"
+#include "TeamTree.h"
 
 class world_cup_t {
 private:
-	//
-	// Here you may add anything you want
-	//
+	TeamTree<TeamId>* teamIdTree;
+    TeamTree<TeamStats>* teamStatsTree;
+    PlayerTable* hashTable;
+    Team* removedTeamsPlayersTeam;
+
+    static const int WIN_POINTS = 3;
+    static const int LOSE_POINTS = 0;
+    static const int TIE_POINTS = 1;
 	
 public:
 	// <DO-NOT-MODIFY> {

@@ -5,9 +5,22 @@
 #include "Team.h"
 #include "PlayerNode.h"
 
+Team::Team(PlayerNode* node, bool goalKeeper)
+{
+    this->key = nullptr;
+    this->teamSpirit = node->getPartialSpirit();
+    this->points = 0;
+    this->playersTreeRoot = node;
+    this->valid = goalKeeper;
+    this->numPlayers = 1;
+}
+
 Team::~Team()
 {
-    //TODO add destructor :)
+    if (!this->isDummy())
+    {
+        delete this->key;
+    }
 }
 
 TeamStats* Team::getKey() const
@@ -80,9 +93,17 @@ void Team::increaseNumPlayers(int amount)
     this->numPlayers += amount;
 }
 
-PlayerNode* Team::addPlayer(Player* player)
+PlayerNode* Team::addPlayer(Player* player, int gamesPlayed, permutation_t spirit, bool goalKeeper)
 {
-    //TODO add code here :)
+    this->teamSpirit = this->teamSpirit * spirit;
+
+    PlayerNode* node = new PlayerNode(player, gamesPlayed, this->teamSpirit, goalKeeper);
+
+    Team* team = node->getTeam();
+
+    node->unionInto(this);
+
+    return node;
 }
 
 bool Team::operator<(const Team& other) const

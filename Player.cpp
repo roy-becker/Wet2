@@ -13,3 +13,8 @@ int Player::getCards() const
 {
     return this->cards;
 }
+
+void Player::addCards(int amount)
+{
+    this->cards += amount;
+}

@@ -6,6 +6,7 @@
 #define WET2_PLAYERNODE_H
 
 #include "Player.h"
+#include "wet2util.h"
 
 class Team;
 
@@ -20,8 +21,7 @@ private:
 public:
     PlayerNode* parent;
 
-    PlayerNode(Player* player, int gamesPlayed, const permutation_t& partialSpirit): player(player), gamesPlayedDiff(gamesPlayed),
-    partialSpiritDiff(partialSpirit), parent(nullptr), team(nullptr) {}
+    PlayerNode(Player* player, int gamesPlayed, const permutation_t& partialSpirit, bool goalKeeper);
     ~PlayerNode();
     PlayerNode(const PlayerNode& other) = delete;
     PlayerNode& operator=(const PlayerNode& other) = delete;
@@ -31,7 +31,7 @@ public:
     Team* getTeam() const;
     Team* findTeam() const;
     bool isRoot() const;
-    int getGamesPlayed();
+    int getGamesPlayed() const;
     permutation_t getPartialSpirit();
     PlayerNode* shrinkRoute();
     void addDegrees(PlayerNode* other);

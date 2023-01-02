@@ -13,7 +13,16 @@ PlayerTable::PlayerTable()
 
 PlayerTable::~PlayerTable()
 {
-    //TODO add destructor ;)
+    for (int i = 0; i < this->size; ++i)
+    {
+        if (this->table[i] != nullptr)
+        {
+            delete this->table[i];
+            this->table[i] = nullptr;
+        }
+    }
+
+    delete[] this->table;
 }
 
 void PlayerTable::insert(PlayerNode* playerNode)

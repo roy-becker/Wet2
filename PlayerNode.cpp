@@ -5,14 +5,25 @@
 #include "PlayerNode.h"
 #include "Team.h"
 
+PlayerNode::PlayerNode(Player* player, int gamesPlayed, const permutation_t& partialSpirit, bool goalKeeper)
+{
+    this->player = player;
+    this->gamesPlayedDiff = gamesPlayed;
+    this->partialSpiritDiff = partialSpirit;
+    this->team = new Team(this, goalKeeper);
+    this->parent = nullptr;
+}
+
 PlayerNode::~PlayerNode()
 {
-    //TODO add destructor :)
+    delete this->player;
 }
 
 void PlayerNode::unionInto(Team* newTeam)
 {
-    int n = this->team->getNumPlayers();
+    Team* oldTeam = this->team;
+
+    int n = oldTeam->getNumPlayers();
     int m = newTeam->getNumPlayers();
 
     PlayerNode* tree = newTeam->getPlayersTreeRoot();
@@ -21,7 +32,7 @@ void PlayerNode::unionInto(Team* newTeam)
     {
         newTeam->setPlayersTreeRoot(this);
     }
-    else if (n < m)
+    else if (n <= m)
     {
         this->parent = tree;
 
@@ -42,10 +53,12 @@ void PlayerNode::unionInto(Team* newTeam)
     }
 
     newTeam->increaseNumPlayers(n);
-    newTeam->setValid(this->team->isValid() || newTeam->isValid());
-    newTeam->increaseAbility(this->team->getAbility());
-    newTeam->composeTeamSpirit(this->team->getTeamSpirit());
-    newTeam->addPoints(this->team->getPoints());
+    newTeam->setValid(oldTeam->isValid() || newTeam->isValid());
+    newTeam->increaseAbility(oldTeam->getAbility());
+    newTeam->composeTeamSpirit(oldTeam->getTeamSpirit());
+    newTeam->addPoints(oldTeam->getPoints());
+
+    delete oldTeam;
 }
 
 Player* PlayerNode::getPlayer() const
@@ -73,7 +86,7 @@ bool PlayerNode::isRoot() const
     return this->parent == nullptr;
 }
 
-int PlayerNode::getGamesPlayed()
+int PlayerNode::getGamesPlayed() const
 {
     if (this->isRoot())
     {

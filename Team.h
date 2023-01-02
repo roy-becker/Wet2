@@ -23,11 +23,12 @@ private:
 
 public:
     Team(): key(nullptr), teamSpirit(permutation_t::neutral()), points(0), playersTreeRoot(nullptr), valid(false), numPlayers(0) {}
-    Team(int id, int points): teamSpirit(permutation_t::neutral()), points(points),
+    Team(int id): teamSpirit(permutation_t::neutral()), points(0),
                 playersTreeRoot(nullptr), valid(false), numPlayers(0)
     {
         this->key = new TeamStats(id);
     }
+    Team(PlayerNode* node, bool goalKeeper);
     ~Team();
     Team(const Team& other) = delete;
     Team& operator=(const Team& other) = delete;
@@ -45,7 +46,7 @@ public:
     void setValid(bool newValid);
     int getNumPlayers() const;
     void increaseNumPlayers(int amount);
-    PlayerNode* addPlayer(Player* player);
+    PlayerNode* addPlayer(Player* player, int gamesPlayed, permutation_t spirit, bool goalKeeper);
     bool operator<(const Team& other) const;
     bool operator>(const Team& other) const;
     void buy(Team* other);

@@ -6,7 +6,12 @@
 
 Chain::~Chain()
 {
-    //TODO add destructor :)
+    delete this->playerNode;
+
+    if (this->next != nullptr)
+    {
+        delete this->next;
+    }
 }
 
 PlayerNode* Chain::getPlayerNode() const

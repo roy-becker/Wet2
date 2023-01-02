@@ -19,6 +19,7 @@ public:
     Player& operator=(const Player& other) = delete;
     int getId() const;
     int getCards() const;
+    void addCards(int amount);
 };
 
 

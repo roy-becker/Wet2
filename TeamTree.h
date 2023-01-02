@@ -36,14 +36,18 @@ public:
     Team* search(KEY* searchKey);
     void insert(Team* team);
     void remove(Team* team);
-    Team* operator[](int i);
+    Team* getIthTeam(int i) const;
     bool isAVLTree() const;
+    void deleteTeams();
 };
 
 template <class KEY>
 TeamTree<KEY>::~TeamTree<KEY>()
 {
-    //TODO add destructor :)
+    if (this->tree != nullptr)
+    {
+        delete this->tree;
+    }
 }
 
 template <class KEY>
@@ -222,13 +226,13 @@ void TeamTree<KEY>::remove(Team* team)
 }
 
 template <class KEY>
-Team* TeamTree<KEY>::operator[](int i)
+Team* TeamTree<KEY>::getIthTeam(int i) const
 {
     if (this->tree == nullptr)
     {
         return nullptr;
     }
-    return this->tree[i];
+    return this->tree->getIthTeamRec(i);
 }
 
 template <class KEY>
@@ -245,6 +249,15 @@ template <class KEY>
 bool TeamTree<KEY>::isAVLTree() const
 {
     return isAVLTree(this->tree);
+}
+
+template <class KEY>
+void TeamTree<KEY>::deleteTeams()
+{
+    if (this->tree != nullptr)
+    {
+        this->tree->deleteTeamsRec();
+    }
 }
 
 #endif //WET2_TEAMTREE_H

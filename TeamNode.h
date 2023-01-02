@@ -45,13 +45,24 @@ public:
     void updateNumTeamsInSubtree();
     Team* searchRec(KEY* searchKey) const;
     bool isLeaf() const;
-    Team* operator[](int i) const;
+    Team* getIthTeamRec(int i) const;
+    void deleteTeamsRec();
 };
 
 template <class KEY>
 TeamNode<KEY>::~TeamNode<KEY>()
 {
-    //TODO add destructor :)
+    if (this->left != nullptr)
+    {
+        delete this->left;
+    }
+
+    if (this->right != nullptr)
+    {
+        delete this->right;
+    }
+
+    this->team = nullptr;
 }
 
 template <class KEY>
@@ -150,11 +161,11 @@ void TeamNode<KEY>::updateNumTeamsInSubtree()
 template <class KEY>
 Team* TeamNode<KEY>::searchRec(KEY* searchKey) const
 {
-    if (*searchKey == *this->key)
+    if (*searchKey == *this->team->getKey())
     {
         return this->team;
     }
-    if (*searchKey < *this->key)
+    if (*searchKey < *this->team->getKey())
     {
         if (this->left == nullptr)
         {
@@ -185,7 +196,7 @@ bool TeamNode<KEY>::isLeaf() const
 }
 
 template <class KEY>
-Team* TeamNode<KEY>::operator[](int i) const
+Team* TeamNode<KEY>::getIthTeamRec(int i) const
 {
     int j;
 
@@ -208,7 +219,7 @@ Team* TeamNode<KEY>::operator[](int i) const
         {
             return nullptr;
         }
-        return this->left[i];
+        return this->left->getIthTeamRec(i);
     }
     else
     {
@@ -216,8 +227,26 @@ Team* TeamNode<KEY>::operator[](int i) const
         {
             return nullptr;
         }
-        return this->right[i - j - 1];
+        return this->right->getIthTeamRec(i - j - 1);
     }
+}
+
+template <class KEY>
+void TeamNode<KEY>::deleteTeamsRec()
+{
+    if (this->left != nullptr)
+    {
+        this->left->deleteTeamsRec();
+    }
+
+    if (this->right != nullptr)
+    {
+        this->right->deleteTeamsRec();
+    }
+
+    delete this->team;
+
+    this->team = nullptr;
 }
 
 #endif //WET2_TEAMNODE_H
