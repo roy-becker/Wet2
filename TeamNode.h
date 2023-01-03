@@ -47,6 +47,8 @@ public:
     bool isLeaf() const;
     Team* getIthTeamRec(int i) const;
     void deleteTeamsRec();
+    TeamNode<KEY>* getRightMost();
+    TeamNode<KEY>* getLeftMost();
 };
 
 template <class KEY>
@@ -247,6 +249,32 @@ void TeamNode<KEY>::deleteTeamsRec()
     delete this->team;
 
     this->team = nullptr;
+}
+
+template <class KEY>
+TeamNode<KEY>* TeamNode<KEY>::getLeftMost()
+{
+    if (this->left == nullptr)
+    {
+        return this;
+    }
+    else
+    {
+        return this->left->getLeftMost();
+    }
+}
+
+template <class KEY>
+TeamNode<KEY>* TeamNode<KEY>::getRightMost()
+{
+    if (this->right == nullptr)
+    {
+        return this;
+    }
+    else
+    {
+        return this->right->getRightMost();
+    }
 }
 
 #endif //WET2_TEAMNODE_H

@@ -51,6 +51,7 @@ StatusType world_cup_t::add_team(int teamId)
     try
     {
         this->teamIdTree->insert(team);
+        this->teamStatsTree->insert(team);
     }
     catch (const std::bad_alloc& e)
     {
@@ -87,7 +88,17 @@ StatusType world_cup_t::remove_team(int teamId)
         return StatusType::FAILURE;
     }
 
-    team->getPlayersTreeRoot()->unionInto(this->removedTeamsPlayersTeam);
+    this->teamIdTree->remove(team);
+    this->teamStatsTree->remove(team);
+
+    if (team->getNumPlayers() == 0)
+    {
+        delete team;
+    }
+    else
+    {
+        team->getPlayersTreeRoot()->unionInto(this->removedTeamsPlayersTeam);
+    }
 
 	return StatusType::SUCCESS;
 }
@@ -138,7 +149,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 
     try
     {
-        node = team->addPlayer(player, gamesPlayed, spirit, goalKeeper);
+        node = team->addPlayer(player, gamesPlayed, spirit, ability, goalKeeper);
     }
     catch (const std::bad_alloc& e)
     {
@@ -201,23 +212,36 @@ output_t<int> world_cup_t::play_match(int teamId1, int teamId2)
         return StatusType::FAILURE;
     }
 
-    if (team1 < team2)
+    team1->increaseGamesPlayed(1);
+    team2->increaseGamesPlayed(1);
+
+    if (team1->getPower() < team2->getPower())
     {
         team1->addPoints(LOSE_POINTS);
         team2->addPoints(WIN_POINTS);
+        return 3;
     }
-    else if (team1 > team2)
+    if (team1->getPower() > team2->getPower())
     {
         team1->addPoints(WIN_POINTS);
         team2->addPoints(LOSE_POINTS);
+        return 1;
     }
-    else
+    if (team1->getSpiritStrength() < team2->getSpiritStrength())
     {
-        team1->addPoints(TIE_POINTS);
-        team2->addPoints(TIE_POINTS);
+        team1->addPoints(LOSE_POINTS);
+        team2->addPoints(WIN_POINTS);
+        return 4;
     }
-
-	return StatusType::SUCCESS;
+    if (team1->getSpiritStrength() > team2->getSpiritStrength())
+    {
+        team1->addPoints(WIN_POINTS);
+        team2->addPoints(LOSE_POINTS);
+        return 2;
+    }
+    team1->addPoints(TIE_POINTS);
+    team2->addPoints(TIE_POINTS);
+    return 0;
 }
 
 output_t<int> world_cup_t::num_played_games_for_player(int playerId)
@@ -383,6 +407,9 @@ StatusType world_cup_t::buy_team(int teamId1, int teamId2)
     {
         return StatusType::FAILURE;
     }
+
+    this->teamIdTree->remove(team2);
+    this->teamStatsTree->remove(team2);
 
     team1->buy(team2);
 

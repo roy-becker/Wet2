@@ -19,12 +19,6 @@ PlayerNode* Chain::getPlayerNode() const
     return this->playerNode;
 }
 
-Chain& Chain::operator=(const Chain& other)
-{
-    this->playerNode = other.playerNode;
-    this->next = other.next;
-}
-
 PlayerNode* Chain::searchPlayer(int id) const
 {
     if (this->playerNode->getPlayer()->getId() == id)

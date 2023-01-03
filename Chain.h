@@ -20,7 +20,7 @@ public:
     Chain(PlayerNode* playerNode, Chain* next): playerNode(playerNode), next(next) {}
     ~Chain();
     Chain(const Chain& other) = delete;
-    Chain& operator=(const Chain& other);
+    Chain& operator=(const Chain& other) = delete;
     PlayerNode* getPlayerNode() const;
     PlayerNode* searchPlayer(int id) const;
     bool isDummy() const;

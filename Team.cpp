@@ -5,9 +5,10 @@
 #include "Team.h"
 #include "PlayerNode.h"
 
-Team::Team(PlayerNode* node, bool goalKeeper)
+Team::Team(PlayerNode* node, int ability, bool goalKeeper)
 {
-    this->key = nullptr;
+    this->key = new TeamStats(DUMMY_ID);
+    this->key->increaseAbility(ability);
     this->teamSpirit = node->getPartialSpirit();
     this->points = 0;
     this->playersTreeRoot = node;
@@ -93,36 +94,35 @@ void Team::increaseNumPlayers(int amount)
     this->numPlayers += amount;
 }
 
-PlayerNode* Team::addPlayer(Player* player, int gamesPlayed, permutation_t spirit, bool goalKeeper)
+void Team::increaseGamesPlayed(int amount)
+{
+    if (this->playersTreeRoot != nullptr)
+    {
+        this->playersTreeRoot->addGamesPlayed(amount);
+    }
+}
+
+int Team::getPower() const
+{
+    return this->points + this->getAbility();
+}
+
+int Team::getSpiritStrength() const
+{
+    return this->teamSpirit.strength();
+}
+
+PlayerNode* Team::addPlayer(Player* player, int gamesPlayed, const permutation_t& spirit, int ability, bool goalKeeper)
 {
     this->teamSpirit = this->teamSpirit * spirit;
 
-    PlayerNode* node = new PlayerNode(player, gamesPlayed, this->teamSpirit, goalKeeper);
+    PlayerNode* node = new PlayerNode(player, gamesPlayed, this->teamSpirit, ability, goalKeeper);
 
     Team* team = node->getTeam();
 
     node->unionInto(this);
 
     return node;
-}
-
-bool Team::operator<(const Team& other) const
-{
-    if (this->points + this->getAbility() < other.points + other.getAbility())
-    {
-        return true;
-    }
-    if (this->points + this->getAbility() > other.points + other.getAbility())
-    {
-        return false;
-    }
-
-    return this->teamSpirit.strength() < other.teamSpirit.strength();
-}
-
-bool Team::operator>(const Team& other) const
-{
-    return other < *this;
 }
 
 void Team::buy(Team* other)
@@ -138,5 +138,5 @@ void Team::buy(Team* other)
 
 bool Team::isDummy() const
 {
-    return this->key == nullptr;
+    return this->getId() == DUMMY_ID;
 }

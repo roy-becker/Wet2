@@ -9,6 +9,10 @@ PlayerTable::PlayerTable()
     this->count = 0;
     this->size = INITIAL_SIZE;
     this->table = new Chain*[this->size];
+    for (int i = 0; i < this->size; ++i)
+    {
+        this->table[i] = nullptr;
+    }
 }
 
 PlayerTable::~PlayerTable()
@@ -65,6 +69,10 @@ void PlayerTable::rehash()
     this->size = 2 * oldSize + 1;
 
     Chain** temp = new Chain*[this->size];
+    for (int i = 0; i < this->size; ++i)
+    {
+        temp[i] = nullptr;
+    }
 
     for (int i = 0; i < this->size; ++i)
     {

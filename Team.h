@@ -21,14 +21,19 @@ private:
     bool valid;
     int numPlayers;
 
+    static const int DUMMY_ID = 0;
+
 public:
-    Team(): key(nullptr), teamSpirit(permutation_t::neutral()), points(0), playersTreeRoot(nullptr), valid(false), numPlayers(0) {}
+    Team(): teamSpirit(permutation_t::neutral()), points(0), playersTreeRoot(nullptr), valid(false), numPlayers(0)
+    {
+        this->key = new TeamStats(DUMMY_ID);
+    }
     Team(int id): teamSpirit(permutation_t::neutral()), points(0),
                 playersTreeRoot(nullptr), valid(false), numPlayers(0)
     {
         this->key = new TeamStats(id);
     }
-    Team(PlayerNode* node, bool goalKeeper);
+    Team(PlayerNode* node, int ability, bool goalKeeper);
     ~Team();
     Team(const Team& other) = delete;
     Team& operator=(const Team& other) = delete;
@@ -46,9 +51,10 @@ public:
     void setValid(bool newValid);
     int getNumPlayers() const;
     void increaseNumPlayers(int amount);
-    PlayerNode* addPlayer(Player* player, int gamesPlayed, permutation_t spirit, bool goalKeeper);
-    bool operator<(const Team& other) const;
-    bool operator>(const Team& other) const;
+    void increaseGamesPlayed(int amount);
+    int getPower() const;
+    int getSpiritStrength() const;
+    PlayerNode* addPlayer(Player* player, int gamesPlayed, const permutation_t& spirit, int ability, bool goalKeeper);
     void buy(Team* other);
     bool isDummy() const;
 };

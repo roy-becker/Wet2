@@ -21,7 +21,7 @@ private:
 public:
     PlayerNode* parent;
 
-    PlayerNode(Player* player, int gamesPlayed, const permutation_t& partialSpirit, bool goalKeeper);
+    PlayerNode(Player* player, int gamesPlayed, const permutation_t& partialSpirit, int ability, bool goalKeeper);
     ~PlayerNode();
     PlayerNode(const PlayerNode& other) = delete;
     PlayerNode& operator=(const PlayerNode& other) = delete;
@@ -32,6 +32,7 @@ public:
     Team* findTeam() const;
     bool isRoot() const;
     int getGamesPlayed() const;
+    void addGamesPlayed(int amount);
     permutation_t getPartialSpirit();
     PlayerNode* shrinkRoute();
     void addDegrees(PlayerNode* other);

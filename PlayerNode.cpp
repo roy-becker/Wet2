@@ -5,13 +5,14 @@
 #include "PlayerNode.h"
 #include "Team.h"
 
-PlayerNode::PlayerNode(Player* player, int gamesPlayed, const permutation_t& partialSpirit, bool goalKeeper)
+PlayerNode::PlayerNode(Player* player, int gamesPlayed, const permutation_t& partialSpirit, int ability, bool goalKeeper)
 {
     this->player = player;
     this->gamesPlayedDiff = gamesPlayed;
     this->partialSpiritDiff = partialSpirit;
-    this->team = new Team(this, goalKeeper);
     this->parent = nullptr;
+
+    this->team = new Team(this, ability, goalKeeper);
 }
 
 PlayerNode::~PlayerNode()
@@ -31,6 +32,7 @@ void PlayerNode::unionInto(Team* newTeam)
     if (m == 0)
     {
         newTeam->setPlayersTreeRoot(this);
+        this->team = newTeam;
     }
     else if (n <= m)
     {
@@ -94,6 +96,11 @@ int PlayerNode::getGamesPlayed() const
     }
 
     return this->parent->getGamesPlayed() + this->gamesPlayedDiff;
+}
+
+void PlayerNode::addGamesPlayed(int amount)
+{
+    this->gamesPlayedDiff += amount;
 }
 
 permutation_t PlayerNode::getPartialSpirit()
