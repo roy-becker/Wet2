@@ -28,7 +28,7 @@ public:
     {
         this->key = new TeamStats(DUMMY_ID);
     }
-    Team(int id): teamSpirit(permutation_t::neutral()), points(0),
+    explicit Team(int id): teamSpirit(permutation_t::neutral()), points(0),
                 playersTreeRoot(nullptr), valid(false), numPlayers(0)
     {
         this->key = new TeamStats(id);
