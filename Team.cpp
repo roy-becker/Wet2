@@ -128,6 +128,9 @@ void Team::buy(Team* other)
     if (this->playersTreeRoot == nullptr)
     {
         other->addPoints(this->points);
+
+        delete other;
+
         return;
     }
 
