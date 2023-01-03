@@ -155,7 +155,7 @@ TeamNode<KEY>* TeamTree<KEY>::insertRec(TeamNode<KEY>* node, Team* team)
     {
         node->left = insertRec(node->left, team);
     }
-    else if (*(node->getKey()) < *key)
+    else if (*key > *(node->getKey()))
     {
         node->right = insertRec(node->right, team);
     }
@@ -192,7 +192,7 @@ TeamNode<KEY>* TeamTree<KEY>::removeRec(TeamNode<KEY>* node, Team* team)
     {
         node->left = removeRec(node->left,team);
     }
-    else if(*node->getKey() < *key)
+    else if(*key > *node->getKey())
     {
         node->right = removeRec(node->right,team);
     }
