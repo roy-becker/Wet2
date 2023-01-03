@@ -95,14 +95,24 @@ bool PlayerNode::isRoot() const
     return this->parent == nullptr;
 }
 
-int PlayerNode::getGamesPlayed() const
+int PlayerNode::getGamesPlayed()
 {
     if (this->isRoot())
     {
         return this->gamesPlayedDiff;
     }
 
-    return this->parent->getGamesPlayed() + this->gamesPlayedDiff;
+    int gamesPlayed = this->parent->getGamesPlayed() + this->gamesPlayedDiff;
+
+    if (this->parent->isRoot())
+    {
+        return gamesPlayed;
+    }
+
+    this->addDegrees(this->parent);
+    this->parent = this->parent->parent;
+
+    return gamesPlayed;
 }
 
 void PlayerNode::addGamesPlayed(int amount)
@@ -117,7 +127,17 @@ permutation_t PlayerNode::getPartialSpirit()
         return this->partialSpiritDiff;
     }
 
-    return this->parent->getPartialSpirit() * this->partialSpiritDiff;
+    permutation_t partialSpirit = this->parent->getPartialSpirit() * this->partialSpiritDiff;
+
+    if (this->parent->isRoot())
+    {
+        return partialSpirit;
+    }
+
+    this->addDegrees(this->parent);
+    this->parent = this->parent->parent;
+
+    return partialSpirit;
 }
 
 PlayerNode* PlayerNode::shrinkRoute()

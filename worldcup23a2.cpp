@@ -259,8 +259,6 @@ output_t<int> world_cup_t::num_played_games_for_player(int playerId)
 
     int gamesPlayed = node->getGamesPlayed();
 
-    node->shrinkRoute();
-
     return gamesPlayed;
 }
 
@@ -358,8 +356,6 @@ output_t<permutation_t> world_cup_t::get_partial_spirit(int playerId)
     }
 
     permutation_t partialSpirit = node->getPartialSpirit();
-
-    node->shrinkRoute();
 
     return partialSpirit;
 }

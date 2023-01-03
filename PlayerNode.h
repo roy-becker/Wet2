@@ -31,7 +31,7 @@ public:
     Team* getTeam() const;
     Team* findTeam() const;
     bool isRoot() const;
-    int getGamesPlayed() const;
+    int getGamesPlayed();
     void addGamesPlayed(int amount);
     permutation_t getPartialSpirit();
     PlayerNode* shrinkRoute();
