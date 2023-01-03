@@ -6,7 +6,10 @@
 
 Chain::~Chain()
 {
-    delete this->playerNode;
+    if (this->playerNode != nullptr)
+    {
+        delete this->playerNode;
+    }
 
     if (this->next != nullptr)
     {

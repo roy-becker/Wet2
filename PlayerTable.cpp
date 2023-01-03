@@ -76,7 +76,7 @@ void PlayerTable::rehash()
         temp[i] = nullptr;
     }
 
-    for (int i = 0; i < this->size; ++i)
+    for (int i = 0; i < oldSize; ++i)
     {
         Chain* chain = this->table[i];
 
