@@ -83,7 +83,7 @@ void PlayerTable::rehash()
         while (chain != nullptr)
         {
             int index = this->hash(chain->getPlayerNode()->getPlayer()->getId());
-            temp[i] = new Chain(chain->getPlayerNode(), temp[i]);
+            temp[index] = new Chain(chain->getPlayerNode(), temp[index]);
             toDelete = chain;
             chain = chain->next;
             delete toDelete;

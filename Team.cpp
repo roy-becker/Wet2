@@ -118,8 +118,6 @@ PlayerNode* Team::addPlayer(Player* player, int gamesPlayed, const permutation_t
 
     PlayerNode* node = new PlayerNode(player, gamesPlayed, this->teamSpirit, ability, goalKeeper);
 
-    Team* team = node->getTeam();
-
     node->unionInto(this);
 
     return node;

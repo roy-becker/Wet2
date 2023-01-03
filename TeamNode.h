@@ -30,8 +30,8 @@ public:
     TeamNode<KEY> *left;
     TeamNode<KEY> *right;
 
-    explicit TeamNode<KEY>(Team* team): team(team), height(LEAF_HEIGHT), left(nullptr), right(nullptr),
-                                                        numTeamsInSubtree(NUM_TEAMS_IN_LEAF) {};
+    explicit TeamNode<KEY>(Team* team): team(team), height(LEAF_HEIGHT),  numTeamsInSubtree(NUM_TEAMS_IN_LEAF),
+                                                                                left(nullptr), right(nullptr) {};
     TeamNode<KEY>(const TeamNode<KEY>& other) = delete;
     TeamNode<KEY>& operator=(const TeamNode<KEY>& other) = delete;
     ~TeamNode<KEY>();
