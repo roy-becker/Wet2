@@ -88,7 +88,7 @@ void PlayerTable::rehash()
             toDelete = chain;
             chain = chain->next;
 
-            toDelete->letGoOfPlayerNode();
+            toDelete->letGo();
             delete toDelete;
         }
 
