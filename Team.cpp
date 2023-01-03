@@ -18,10 +18,7 @@ Team::Team(PlayerNode* node, int ability, bool goalKeeper)
 
 Team::~Team()
 {
-    if (!this->isDummy())
-    {
-        delete this->key;
-    }
+    delete this->key;
 }
 
 TeamStats* Team::getKey() const
