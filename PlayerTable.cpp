@@ -72,6 +72,7 @@ void PlayerTable::rehash()
     Chain** temp = new Chain*[this->size];
     for (int i = 0; i < this->size; ++i)
     {
+        delete temp[i];
         temp[i] = nullptr;
     }
 
