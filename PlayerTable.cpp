@@ -11,6 +11,7 @@ PlayerTable::PlayerTable()
     this->table = new Chain*[this->size];
     for (int i = 0; i < this->size; ++i)
     {
+        delete this->table[i];
         this->table[i] = nullptr;
     }
 }
