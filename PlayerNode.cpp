@@ -12,7 +12,14 @@ PlayerNode::PlayerNode(Player* player, int gamesPlayed, const permutation_t& par
     this->partialSpiritDiff = partialSpirit;
     this->parent = nullptr;
 
-    this->team = new Team(this, ability, goalKeeper);
+    try
+    {
+        this->team = new Team(this, ability, goalKeeper);
+    }
+    catch (const std::bad_alloc& e)
+    {
+        throw e;
+    }
 }
 
 PlayerNode::~PlayerNode()

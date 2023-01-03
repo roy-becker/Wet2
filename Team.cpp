@@ -113,7 +113,16 @@ PlayerNode* Team::addPlayer(Player* player, int gamesPlayed, const permutation_t
 {
     this->teamSpirit = this->teamSpirit * spirit;
 
-    PlayerNode* node = new PlayerNode(player, gamesPlayed, this->teamSpirit, ability, goalKeeper);
+    PlayerNode* node;
+    try
+    {
+        node = new PlayerNode(player, gamesPlayed, this->teamSpirit, ability, goalKeeper);
+    }
+    catch (const std::bad_alloc& e)
+    {
+
+        throw e;
+    }
 
     node->unionInto(this);
 
@@ -122,16 +131,16 @@ PlayerNode* Team::addPlayer(Player* player, int gamesPlayed, const permutation_t
 
 void Team::buy(Team* other)
 {
-    if (this->playersTreeRoot == nullptr)
+    if (other->playersTreeRoot == nullptr)
     {
-        other->addPoints(this->points);
+        this->addPoints(other->points);
 
         delete other;
 
         return;
     }
 
-    this->playersTreeRoot->unionInto(other);
+    other->playersTreeRoot->unionInto(this);
 }
 
 bool Team::isDummy() const
