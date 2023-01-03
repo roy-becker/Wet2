@@ -159,9 +159,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
     try
     {
         this->hashTable->insert(node);
-        this->teamIdTree->remove(team);
         this->teamStatsTree->remove(team);
-        this->teamIdTree->insert(team);
         this->teamStatsTree->insert(team);
     }
     catch (const std::bad_alloc& e)
