@@ -41,3 +41,8 @@ bool Chain::isDummy() const
 {
     return this->playerNode == nullptr;
 }
+
+void Chain::letGoOfPlayerNode()
+{
+    this->playerNode = nullptr;
+}

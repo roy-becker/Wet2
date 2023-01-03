@@ -24,6 +24,7 @@ public:
     PlayerNode* getPlayerNode() const;
     PlayerNode* searchPlayer(int id) const;
     bool isDummy() const;
+    void letGoOfPlayerNode();
 };
 
 #endif //WET2_CHAIN_H

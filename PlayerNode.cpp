@@ -44,6 +44,7 @@ void PlayerNode::unionInto(Team* newTeam)
     else if (n <= m)
     {
         this->parent = tree;
+        this->team = nullptr;
 
         this->gamesPlayedDiff -= tree->gamesPlayedDiff;
         this->partialSpiritDiff = tree->partialSpiritDiff.inv() *

@@ -11,7 +11,6 @@ PlayerTable::PlayerTable()
     this->table = new Chain*[this->size];
     for (int i = 0; i < this->size; ++i)
     {
-        delete this->table[i];
         this->table[i] = nullptr;
     }
 }
@@ -72,7 +71,6 @@ void PlayerTable::rehash()
     Chain** temp = new Chain*[this->size];
     for (int i = 0; i < this->size; ++i)
     {
-        delete temp[i];
         temp[i] = nullptr;
     }
 
@@ -86,8 +84,11 @@ void PlayerTable::rehash()
         {
             int index = this->hash(chain->getPlayerNode()->getPlayer()->getId());
             temp[index] = new Chain(chain->getPlayerNode(), temp[index]);
+
             toDelete = chain;
             chain = chain->next;
+
+            toDelete->letGoOfPlayerNode();
             delete toDelete;
         }
 
