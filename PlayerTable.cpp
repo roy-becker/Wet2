@@ -90,6 +90,8 @@ void PlayerTable::rehash()
             chain = chain->next;
             delete toDelete;
         }
+
+        this->table[i] = nullptr;
     }
 
     Chain** tableToDelete = this->table;

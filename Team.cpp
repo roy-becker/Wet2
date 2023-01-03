@@ -120,7 +120,7 @@ PlayerNode* Team::addPlayer(Player* player, int gamesPlayed, const permutation_t
     }
     catch (const std::bad_alloc& e)
     {
-
+        delete node;
         throw e;
     }
 
