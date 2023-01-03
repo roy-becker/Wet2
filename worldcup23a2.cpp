@@ -10,7 +10,12 @@ world_cup_t::world_cup_t()
 
 world_cup_t::~world_cup_t()
 {
-	// TODO: Your code goes here
+	this->teamIdTree->deleteTeams();
+    delete this->teamIdTree;
+    delete this->teamStatsTree;
+    delete this->removedTeamsPlayersTeam;
+
+    delete this->hashTable;
 }
 
 StatusType world_cup_t::add_team(int teamId)
@@ -149,6 +154,8 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
 
     try
     {
+        this->teamStatsTree->remove(team);
+
         node = team->addPlayer(player, gamesPlayed, spirit, ability, goalKeeper);
     }
     catch (const std::bad_alloc& e)
@@ -159,7 +166,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
     try
     {
         this->hashTable->insert(node);
-        this->teamStatsTree->remove(team);
+
         this->teamStatsTree->insert(team);
     }
     catch (const std::bad_alloc& e)
@@ -357,6 +364,11 @@ output_t<permutation_t> world_cup_t::get_partial_spirit(int playerId)
         return StatusType::FAILURE;
     }
 
+    if (node->findTeam()->isDummy())
+    {
+        return StatusType::FAILURE;
+    }
+
     permutation_t partialSpirit = node->getPartialSpirit();
 
     return partialSpirit;
@@ -409,7 +421,11 @@ StatusType world_cup_t::buy_team(int teamId1, int teamId2)
     this->teamIdTree->remove(team2);
     this->teamStatsTree->remove(team2);
 
+    this->teamStatsTree->remove(team1);
+
     team1->buy(team2);
+
+    this->teamStatsTree->insert(team1);
 
 	return StatusType::SUCCESS;
 }

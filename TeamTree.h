@@ -62,6 +62,9 @@ TeamNode<KEY>* TeamTree<KEY>::rotateLL(TeamNode<KEY>* B)
     B->updateHeight();
     A->updateHeight();
 
+    B->updateNumTeamsInSubtree();
+    A->updateNumTeamsInSubtree();
+
     return A;
 }
 
@@ -76,6 +79,9 @@ TeamNode<KEY>* TeamTree<KEY>::rotateRR(TeamNode<KEY>* A)
 
     A->updateHeight();
     B->updateHeight();
+
+    A->updateNumTeamsInSubtree();
+    B->updateNumTeamsInSubtree();
 
     return B;
 }
@@ -159,6 +165,7 @@ TeamNode<KEY>* TeamTree<KEY>::insertRec(TeamNode<KEY>* node, Team* team)
     }
 
     node->updateHeight();
+    node->updateNumTeamsInSubtree();
 
     return rebalance(node);
 }
@@ -166,7 +173,7 @@ TeamNode<KEY>* TeamTree<KEY>::insertRec(TeamNode<KEY>* node, Team* team)
 template <class KEY>
 void TeamTree<KEY>::insert(Team* team)
 {
-    this->tree = insertRec(this->tree,team);
+    this->tree = insertRec(this->tree, team);
 }
 
 template <class KEY>
@@ -215,6 +222,7 @@ TeamNode<KEY>* TeamTree<KEY>::removeRec(TeamNode<KEY>* node, Team* team)
     }
 
     node->updateHeight();
+    node->updateNumTeamsInSubtree();
 
     return rebalance(node);
 }

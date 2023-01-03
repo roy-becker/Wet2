@@ -111,12 +111,10 @@ int Team::getSpiritStrength() const
 
 PlayerNode* Team::addPlayer(Player* player, int gamesPlayed, const permutation_t& spirit, int ability, bool goalKeeper)
 {
-    this->teamSpirit = this->teamSpirit * spirit;
-
     PlayerNode* node;
     try
     {
-        node = new PlayerNode(player, gamesPlayed, this->teamSpirit, ability, goalKeeper);
+        node = new PlayerNode(player, gamesPlayed, spirit, ability, goalKeeper);
     }
     catch (const std::bad_alloc& e)
     {

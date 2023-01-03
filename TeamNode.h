@@ -194,7 +194,7 @@ Team* TeamNode<KEY>::searchRec(KEY* searchKey) const
 template <class KEY>
 bool TeamNode<KEY>::isLeaf() const
 {
-    return this->height == LEAF_HEIGHT;
+    return this->left == nullptr && this->right == nullptr;
 }
 
 template <class KEY>
