@@ -81,14 +81,24 @@ Team* PlayerNode::getTeam() const
     return this->team;
 }
 
-Team* PlayerNode::findTeam() const
+Team* PlayerNode::findTeam()
 {
     if (this->isRoot())
     {
         return this->team;
     }
 
-    return this->parent->findTeam();
+    Team* team = this->parent->findTeam();
+
+    if (this->parent->isRoot())
+    {
+        return team;
+    }
+
+    this->addDegrees(this->parent);
+    this->parent = this->parent->parent;
+
+    return team;
 }
 
 bool PlayerNode::isRoot() const

@@ -29,7 +29,7 @@ public:
     //void connect(PlayerNode* newParent, int gamesPlayed, const permutation_t& partialSpirit);
     Player* getPlayer() const;
     Team* getTeam() const;
-    Team* findTeam() const;
+    Team* findTeam();
     bool isRoot() const;
     int getGamesPlayed();
     void addGamesPlayed(int amount);
